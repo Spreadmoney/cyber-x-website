@@ -328,6 +328,16 @@ describe("the passkey made in the app (W2.2)", () => {
   it("checks the answer here, then signs in", async () => {
     expect(await actions.passkeyFinish("/account", answer)).toEqual({ error: MESSAGES.gone });
     jar.set(COOKIES.signin, SECRET);
+    // An ID longer than any passkey's never reaches the database.
+    expect(
+      await actions.passkeyFinish("/account", {
+        ...(answer as object),
+        id: "x".repeat(1401),
+      } as never),
+    ).toEqual({
+      error: MESSAGES.gone,
+    });
+    expect(mocked.passkeyKey).not.toHaveBeenCalled();
     mocked.passkeyKey.mockResolvedValue({
       publicKey: new Uint8Array([1]),
       signCount: 1,

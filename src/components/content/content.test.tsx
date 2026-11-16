@@ -76,9 +76,9 @@ describe("post parts", () => {
     expect(screen.getByText("10 Nov 2026 · Video, 2:40")).toBeInTheDocument();
   });
 
-  it("shows the featured post wide, with its excerpt", () => {
+  it("shows the featured post wide, with its excerpt, its title a level-2 heading", () => {
     render(<PostCard post={plain!} featured as="div" />);
-    expect(screen.getByRole("heading", { level: 3, name: "Five scams" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Five scams" })).toBeInTheDocument();
     expect(screen.getByText("Know them.")).toBeInTheDocument();
   });
 

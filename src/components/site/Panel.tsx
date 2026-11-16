@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { RosetteMark } from "./rosette";
 /**
  * A print panel (Figma "Print panel · blue / paper"): a rounded band with
  * the security print rosette behind its content. Panels sit 8 px in from
@@ -74,9 +75,8 @@ export function Panel({
         className={`panel-${tone} relative isolate overflow-hidden rounded-[28px] lg:rounded-[40px] ${innerClassName}`}
       >
         {showRosette ? (
-          <div
-            aria-hidden="true"
-            className={`rosette -z-10 ${blue ? "bg-white" : "bg-accent"} top-(--mt) right-(--mr) left-(--ml) size-(--ms) lg:top-(--dt) lg:right-(--dr) lg:left-(--dl) lg:size-(--ds)`}
+          <RosetteMark
+            className={`${blue ? "bg-white" : "bg-accent"} top-(--mt) right-(--mr) left-(--ml) size-(--ms) lg:top-(--dt) lg:right-(--dr) lg:left-(--dl) lg:size-(--ds)`}
             style={style}
           />
         ) : null}

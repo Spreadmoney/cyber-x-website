@@ -22,6 +22,31 @@ export class CantReachError extends Error {
   }
 }
 
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
+
+/**
+ * How the line to the database is protected (OWASP ASVS 9.2.2). Supabase's
+ * addresses don't ask for encryption, and without it the library talks in
+ * the clear, so anything off this machine is encrypted:
+ *
+ * - DATABASE_CA_CERT set (Supabase's certificate, from Database settings →
+ *   SSL): encrypted, and the database must prove it is Supabase's.
+ * - Otherwise: encrypted.
+ * - A local test database (no encryption there) or an address with its own
+ *   sslmode=…: left as it is.
+ */
+export function sslFor(
+  url: string,
+  caCert: string | undefined,
+): false | "require" | { ca: string; rejectUnauthorized: true } | undefined {
+  const parsed = new URL(url);
+  if (parsed.searchParams.has("sslmode")) return undefined;
+  if (LOCAL_HOSTS.has(parsed.hostname)) return false;
+  const ca = caCert?.trim();
+  if (ca) return { ca: ca.replace(/\\n/g, "\n"), rejectUnauthorized: true };
+  return "require";
+}
+
 export function db(): postgres.Sql {
   if (!client) {
     const url = process.env.DATABASE_URL?.trim();
@@ -29,6 +54,7 @@ export function db(): postgres.Sql {
     if (!/^postgres(ql)?:\/\//.test(url)) {
       throw new CantReachError(new Error("DATABASE_URL must start with postgres://."));
     }
+    const ssl = sslFor(url, process.env.DATABASE_CA_CERT);
     client = postgres(url, {
       // Supabase's pooler shares connections between requests, so statements
       // can't be prepared ahead.
@@ -36,6 +62,7 @@ export function db(): postgres.Sql {
       max: 3,
       connect_timeout: 5,
       idle_timeout: 20,
+      ...(ssl === undefined ? {} : { ssl }),
     });
   }
   return client;
@@ -51,6 +78,13 @@ const CONNECTION_CODES = new Set([
   // The login has no password yet, or the wrong one.
   "28P01",
   "28000",
+  // The database couldn't prove it is Supabase's (DATABASE_CA_CERT).
+  "SELF_SIGNED_CERT_IN_CHAIN",
+  "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+  "UNABLE_TO_GET_ISSUER_CERT_LOCALLY",
+  "DEPTH_ZERO_SELF_SIGNED_CERT",
+  "CERT_HAS_EXPIRED",
+  "ERR_TLS_CERT_ALTNAME_INVALID",
 ]);
 
 /** Whether an error means "no database", as opposed to "the database said no". */

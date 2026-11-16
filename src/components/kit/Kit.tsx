@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ArrowLink, ButtonLink } from "@/components/site/Button";
 import { Icon, type IconName } from "@/components/site/Icon";
 import { Panel, Tag, WRAP } from "@/components/site/Panel";
+import { RosetteMark } from "@/components/site/rosette";
 
 /**
  * The parts the information pages are built from. Each mirrors a helper
@@ -175,6 +176,7 @@ export function Tile({
   link,
   action,
   dark,
+  level = 3,
 }: {
   icon?: IconName | "spark";
   tag?: string;
@@ -185,6 +187,8 @@ export function Tile({
   /** A button at the foot of the tile (Figma Help centre, "Urgent"). */
   action?: ReactNode;
   dark?: boolean;
+  /** The title's heading level: 2 where no section heading sits above the tiles. */
+  level?: 2 | 3;
 }) {
   const box = dark
     ? "shadow-glass rounded-[22px] border border-white/50 bg-white/14 lg:rounded-[26px]"
@@ -194,7 +198,7 @@ export function Tile({
       {icon ? <IconDisc icon={icon} dark={dark} /> : null}
       {tag ? <Tag tone={dark ? "blue" : "paper"}>{tag}</Tag> : null}
       {big ? <p className={TYPE.amt}>{big}</p> : null}
-      <h3 className={TYPE.h4}>{title}</h3>
+      {level === 2 ? <h2 className={TYPE.h4}>{title}</h2> : <h3 className={TYPE.h4}>{title}</h3>}
       {desc ? <p className={`${TYPE.p} ${muted(dark)}`}>{desc}</p> : null}
       {link ? (
         <ArrowLink href={link.href} tone={dark ? "white" : "accent"}>
@@ -467,9 +471,8 @@ export function Person({
 export function VideoSlot({ title, length }: { title: string; length: string }) {
   return (
     <figure className="panel-blue relative isolate flex aspect-video w-full items-center justify-center overflow-hidden rounded-[20px] lg:rounded-[28px]">
-      <div
-        aria-hidden="true"
-        className="rosette -z-10 bg-white"
+      <RosetteMark
+        className="bg-white"
         style={{
           width: "min(800px, 110%)",
           aspectRatio: "1",

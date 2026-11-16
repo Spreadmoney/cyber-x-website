@@ -45,7 +45,9 @@ export function SearchBox({
             ×
           </SiteLink>
         ) : null}
-        <button type="submit" className="sr-only">
+        {/* Enter searches. The button is for screen readers; it takes no
+            Tab stop, so the keyboard never lands on something unseen. */}
+        <button type="submit" tabIndex={-1} className="sr-only">
           Search
         </button>
       </div>

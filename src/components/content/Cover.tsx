@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 import { Icon } from "@/components/site/Icon";
+import { RosetteMark } from "@/components/site/rosette";
 import type { CoverIcon, CoverKind } from "@/lib/content/topics";
 
 /**
@@ -78,8 +79,8 @@ export function Cover({
       className={`relative isolate flex shrink-0 items-center justify-center overflow-hidden ${BACKGROUND[kind]} ${box} ${className}`}
       style={vars}
     >
-      <div
-        className={`rosette -z-10 ${dark ? "bg-white opacity-20" : "bg-accent opacity-30"} size-(--r) lg:size-(--R)`}
+      <RosetteMark
+        className={`${dark ? "bg-white opacity-20" : "bg-accent opacity-30"} size-(--r) lg:size-(--R)`}
         style={{ left: "72%", top: "50%", translate: "-50% -50%" }}
       />
       <span

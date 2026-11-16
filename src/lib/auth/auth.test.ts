@@ -32,7 +32,14 @@ describe("who someone is (W2.1)", () => {
     expect(readWho("kemi.fabrics")).toEqual({ kind: "alias", value: "kemi.fabrics" });
     expect(readWho("no way!")).toBeNull();
     expect(readWho("   ")).toBeNull();
-    expect(readWho(undefined as unknown as string)).toBeNull();
+    expect(readWho(undefined)).toBeNull();
+  });
+
+  it("refuses anything but a short piece of text, before any work is done", () => {
+    expect(readWho({ toString: () => "ayora" })).toBeNull();
+    expect(readWho(["ayora"])).toBeNull();
+    expect(readWho(42)).toBeNull();
+    expect(readWho("a".repeat(65))).toBeNull();
   });
 
   it("hides the middle of a number", () => {

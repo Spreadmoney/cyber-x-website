@@ -7,7 +7,7 @@ import { useId, useState, type ComponentProps } from "react";
  * in on anything smaller (e2e/fields.spec.ts).
  */
 export const FIELD =
-  "h-12 w-full rounded-[14px] border border-[#d5dce8] bg-white px-4 text-base text-fg outline-none placeholder:text-[#737d8f] focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent lg:h-[52px] lg:text-[17px]";
+  "h-12 w-full rounded-[14px] border border-[#d5dce8] bg-white px-4 text-base text-fg outline-none placeholder:text-[#737d8f] focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-1 focus-visible:outline-accent lg:h-[52px] lg:text-[17px]";
 
 export function Field({
   label,

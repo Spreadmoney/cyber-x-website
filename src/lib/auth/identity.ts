@@ -18,9 +18,16 @@ export interface Who {
 const CYBERX_ID = /^cx[\s-]?([0-9a-z]{4})[\s-]?([0-9a-z]{4})[\s-]?([0-9a-z]{4})$/i;
 const LOOKS_LIKE_NUMBER = /^[+\d][\d\s().-]*$/;
 
-/** Reads what was typed, or null when it can't be any of the three. */
-export function readWho(input: string): Who | null {
-  const text = (input ?? "").trim();
+/** Longer than any ID, alias or number: refused before any work is done. */
+const LONGEST_WHO = 64;
+
+/**
+ * Reads what was typed, or null when it can't be any of the three. Anything
+ * but a short string (a sign-in action can be called with anything) is null.
+ */
+export function readWho(input: unknown): Who | null {
+  if (typeof input !== "string" || input.length > LONGEST_WHO) return null;
+  const text = input.trim();
   if (!text) return null;
   const id = CYBERX_ID.exec(text);
   if (id) return { kind: "id", value: `CX-${id[1]}-${id[2]}-${id[3]}`.toUpperCase() };

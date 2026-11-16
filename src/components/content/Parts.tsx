@@ -104,6 +104,7 @@ export function PostCard({
   excerpt?: boolean;
   as?: "li" | "div";
 }) {
+  const Heading = featured ? "h2" : "h3";
   return (
     <Tag_
       className={`group border-line relative flex flex-col overflow-hidden rounded-[20px] border bg-white shadow-[0_8px_24px_rgb(10_19_56/0.06)] transition-shadow hover:shadow-[0_12px_32px_rgb(10_19_56/0.12)] lg:rounded-[24px] ${featured ? "lg:flex-row lg:items-stretch" : ""}`}
@@ -122,14 +123,15 @@ export function PostCard({
           <Tag tone="paper">{BLOG_TOPICS[post.topic].name}</Tag>
           {post.video ? <Tag tone="paper">Video</Tag> : null}
         </div>
-        <h3 className={featured ? TYPE.h3 : TYPE.h4}>
+        {/* The featured post comes straight after the page title: a level-2 heading. */}
+        <Heading className={featured ? TYPE.h3 : TYPE.h4}>
           <SiteLink
             href={postHref(post)}
             className="focus-visible:outline-accent rounded-sm after:absolute after:inset-0 after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             {post.title}
           </SiteLink>
-        </h3>
+        </Heading>
         {featured || excerpt ? <p className={`${TYPE.p} text-muted-fg`}>{post.excerpt}</p> : null}
         <div className="pt-1">
           <Author author={post.author} meta={postMeta(post, shortDate)} />

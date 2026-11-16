@@ -52,10 +52,12 @@ export default async function FreezePage() {
         <div className={`${WRAP} pt-6 pb-10 lg:pt-8 lg:pb-16`}>
           <Grid cols={2}>
             <Tile
+              level={2}
               title="No phone at all?"
               desc="Dial the Cyber X USSD code from any phone and choose Freeze."
             />
             <Tile
+              level={2}
               title="Paid a scammer?"
               desc="Freeze first, then tell us what happened."
               link={{ label: "Report a scam", href: href("report") }}

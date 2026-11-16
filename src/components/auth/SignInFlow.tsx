@@ -269,7 +269,7 @@ function CodeCard({
         maxLength={6}
         value={digits}
         onChange={(event) => setDigits(event.target.value.replace(/\D/g, "").slice(0, 6))}
-        className="focus-visible:border-accent focus-visible:outline-accent h-14 w-full rounded-[14px] border border-[#d5dce8] bg-white text-center font-mono text-[28px] tracking-[0.5em] outline-none focus-visible:outline-2 lg:h-16"
+        className="focus-visible:border-accent focus-visible:outline-accent h-14 w-full rounded-[14px] border border-[#d5dce8] bg-white text-center font-mono text-[28px] tracking-[0.5em] outline-none focus-visible:outline-2 focus-visible:outline-solid lg:h-16"
       />
       {code.testCode ? (
         <Note tone="blue">

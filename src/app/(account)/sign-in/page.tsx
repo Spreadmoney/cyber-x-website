@@ -36,11 +36,13 @@ export default async function SignInPage({ searchParams }: Props) {
       <div className={`${WRAP} pt-6 pb-10 lg:pt-8 lg:pb-16`}>
         <Grid cols={2}>
           <Tile
+            level={2}
             title="New to Cyber X?"
             desc="Get the app on iPhone or Android and sign up in a few minutes."
             link={{ label: "Get the app", href: href("getTheApp") }}
           />
           <Tile
+            level={2}
             title="No phone at all?"
             desc="Dial the Cyber X USSD code from any phone and choose Freeze."
             link={{ label: "Freeze my account", href: href("freeze") }}

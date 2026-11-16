@@ -103,6 +103,15 @@ describe("page parts", () => {
     expect(screen.getByText("1")).toBeInTheDocument();
   });
 
+  it("gives a tile a level-2 title where no section heading sits above it", () => {
+    render(
+      <Grid cols={2}>
+        <Tile level={2} title="New to Cyber X?" />
+      </Grid>,
+    );
+    expect(screen.getByRole("heading", { level: 2, name: "New to Cyber X?" })).toBeInTheDocument();
+  });
+
   it("draws small and dark icon discs", () => {
     const { container } = render(
       <>

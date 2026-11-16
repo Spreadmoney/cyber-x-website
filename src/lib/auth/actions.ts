@@ -241,7 +241,10 @@ export async function passkeyFinish(
   response: AuthenticationResponseJSON,
 ): Promise<{ error: string } | { pausedMs: number }> {
   const secret = await signinSecret(false);
-  if (!secret || !response || typeof response.id !== "string") return { error: MESSAGES.gone };
+  // A passkey's ID is at most 1,023 bytes: about 1,400 characters written out.
+  if (!secret || !response || typeof response.id !== "string" || response.id.length > 1400) {
+    return { error: MESSAGES.gone };
+  }
   const session = newSecret();
   try {
     const { appUrl, websiteUrl } = readAddresses();
