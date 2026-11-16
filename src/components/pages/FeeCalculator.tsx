@@ -8,7 +8,8 @@ import { formatMoney, parseMoney } from "@/lib/money";
 
 /**
  * "Work out a fee" (Figma Fees and limits). Works it out in the browser:
- * nothing is sent anywhere.
+ * nothing is sent anywhere. The fields use 16px text on phones (Figma has
+ * 15px): iPhone Safari zooms the page in on any smaller field.
  */
 const NAIRA = getCountryPack().currency;
 
@@ -34,7 +35,7 @@ export function FeeCalculator() {
           onChange={(event) => {
             if (isService(event.target.value)) setService(event.target.value);
           }}
-          className="focus-visible:outline-accent h-[52px] rounded-[14px] border border-[#d5dce8] bg-white px-4 text-[15px] focus-visible:outline-2 lg:text-[17px]"
+          className="focus-visible:outline-accent h-[52px] rounded-[14px] border border-[#d5dce8] bg-white px-4 text-base focus-visible:outline-2 lg:text-[17px]"
         >
           {Object.entries(SERVICES).map(([key, value]) => (
             <option key={key} value={key}>
@@ -48,7 +49,7 @@ export function FeeCalculator() {
           Amount
         </label>
         <span className="focus-within:outline-accent flex h-[52px] items-center gap-1 rounded-[14px] border border-[#d5dce8] bg-white px-4 focus-within:outline-2">
-          <span aria-hidden="true" className="text-[15px] lg:text-[17px]">
+          <span aria-hidden="true" className="text-base lg:text-[17px]">
             ₦
           </span>
           <input
@@ -58,7 +59,7 @@ export function FeeCalculator() {
             value={text}
             onChange={(event) => setText(event.target.value)}
             aria-describedby={`${id}-result`}
-            className="w-full bg-transparent text-[15px] outline-none lg:text-[17px]"
+            className="w-full bg-transparent text-base outline-none lg:text-[17px]"
           />
         </span>
       </div>
