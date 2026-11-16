@@ -10,8 +10,9 @@ test.describe("Menu bar and footer", () => {
     const bar = page.getByRole("navigation", { name: "Main" });
     await expect(bar).toBeVisible();
     const before = await bar.boundingBox();
-    await page.mouse.wheel(0, 2500);
-    await page.waitForTimeout(300);
+    // Scrolled by the page itself: mobile WebKit has no mouse wheel.
+    await page.evaluate(() => window.scrollTo(0, 2500));
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
     const after = await bar.boundingBox();
     expect(Math.round(after!.y)).toBe(Math.round(before!.y));
     await expect(bar).toBeInViewport();
