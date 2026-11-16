@@ -19,7 +19,13 @@ export type IconName =
   | "camera"
   | "calendar"
   | "askx-32"
-  | "askx-40";
+  | "askx-40"
+  | "clock"
+  | "stop"
+  | "add"
+  | "bank"
+  | "chat"
+  | "lock";
 
 const NATURAL: Record<IconName, number> = {
   send: 22,
@@ -37,6 +43,12 @@ const NATURAL: Record<IconName, number> = {
   calendar: 20,
   "askx-32": 32,
   "askx-40": 40,
+  clock: 24,
+  stop: 24,
+  add: 24,
+  bank: 24,
+  chat: 24,
+  lock: 24,
 };
 
 export function Icon({

@@ -19,6 +19,7 @@ export function Panel({
   rosette,
   rosetteDesktop,
   rosetteOpacity,
+  rosetteAt,
   className = "",
   innerClassName = "",
   children,
@@ -30,6 +31,8 @@ export function Panel({
   rosetteDesktop?: RosettePlace;
   /** 0.2 on blue panels by default, 0.18 on paper. */
   rosetteOpacity?: number;
+  /** Instead of exact places: the rosette's centre as a share of the panel's width and height (Figma FIN). */
+  rosetteAt?: [number, number];
   className?: string;
   innerClassName?: string;
   children: ReactNode;
@@ -47,18 +50,30 @@ export function Panel({
           [`--${prefix}t`]: `${r.y}px`,
         }
       : {};
+  const at = (prefix: string, size: number) =>
+    rosetteAt
+      ? {
+          [`--${prefix}s`]: `${size}px`,
+          [`--${prefix}l`]: `calc(${rosetteAt[0] * 100}% - ${size / 2}px)`,
+          [`--${prefix}r`]: "auto",
+          [`--${prefix}t`]: `calc(${rosetteAt[1] * 100}% - ${size / 2}px)`,
+        }
+      : {};
+  const showRosette = Boolean(rosette || rosetteAt);
   const style = {
     ...place("m", rosette),
     ...place("d", rosetteDesktop ?? rosette),
+    ...at("m", 520),
+    ...at("d", 900),
     opacity,
   } as CSSProperties;
 
   return (
     <Tag className={`p-2 lg:p-6 ${className}`} aria-labelledby={labelledBy}>
       <div
-        className={`panel-${tone} relative isolate overflow-hidden rounded-[28px] ${innerClassName}`}
+        className={`panel-${tone} relative isolate overflow-hidden rounded-[28px] lg:rounded-[40px] ${innerClassName}`}
       >
-        {rosette ? (
+        {showRosette ? (
           <div
             aria-hidden="true"
             className={`rosette -z-10 ${blue ? "bg-white" : "bg-accent"} top-(--mt) right-(--mr) left-(--ml) size-(--ms) lg:top-(--dt) lg:right-(--dr) lg:left-(--dl) lg:size-(--ds)`}
