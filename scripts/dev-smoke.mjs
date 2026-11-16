@@ -14,10 +14,11 @@ import { chromium } from "@playwright/test";
 
 const PORT = Number(process.env.DEV_SMOKE_PORT ?? 3301);
 const BASE = `http://localhost:${PORT}`;
-const START_PAGES = ["/"];
+const START_PAGES = ["/", "/get-the-app", "/maintenance", "/no-such-page"];
 const MAX_PAGES = 120;
 
 const problems = [];
+const notBuiltYet = [];
 const serverLog = [];
 
 const server = spawn("npx", ["next", "dev", "--port", String(PORT)], {
@@ -101,7 +102,10 @@ async function main() {
   );
   const page = await browser.newPage({ viewport: { width: 393, height: 852 } });
   page.on("console", (message) => {
-    if (message.type() === "error") problems.push(`${page.url()}: console: ${message.text()}`);
+    // A page from a later stage answers 404 on purpose (see below).
+    if (message.type() === "error" && !/status of 404/.test(message.text())) {
+      problems.push(`${page.url()}: console: ${message.text()}`);
+    }
   });
   page.on("pageerror", (error) => problems.push(`${page.url()}: ${error.message}`));
 
@@ -117,6 +121,12 @@ async function main() {
       waitUntil: "networkidle",
       timeout: 60_000,
     });
+    // A page from a later stage isn't built yet: its link shows the
+    // "This page isn't here" page. That is expected; anything else is not.
+    if (response?.status() === 404) {
+      notBuiltYet.push(path);
+      continue;
+    }
     if (!response || response.status() >= 400) {
       problems.push(`${path}: HTTP ${response?.status() ?? "no response"}`);
       continue;
@@ -136,7 +146,9 @@ async function main() {
   }
 
   await browser.close();
-  console.log(`Development preview: visited ${seen.size} pages.`);
+  console.log(
+    `Development preview: visited ${seen.size} pages (${notBuiltYet.length} linked pages come in later stages).`,
+  );
 }
 
 let failed = false;

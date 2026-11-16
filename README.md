@@ -48,7 +48,16 @@ never reaches Vercel.
 | Folder           | What's in it                                       |
 | ---------------- | -------------------------------------------------- |
 | `src/app`        | Pages and routes                                   |
-| `src/components` | The website's parts                                |
+| `src/components` | The website's parts (menu bar, footers, panels…)   |
 | `src/lib`        | Addresses, keys and security (the policy, headers) |
+| `src/lib/site`   | Page addresses, phone type, maintenance switch     |
+| `public`         | The logo, seal, icons and print, from Figma        |
 | `e2e`            | Phone and desktop tests                            |
 | `docs`           | Roadmap and decisions                              |
+
+## Switches
+
+| Setting                   | What it does                                                        |
+| ------------------------- | ------------------------------------------------------------------- |
+| `MAINTENANCE_MODE=on`     | Every page shows "We're making Cyber X better". The app carries on  |
+| `MAINTENANCE_BACK_BY=...` | The time it shows, in words, e.g. `02:00, 17 November (Lagos time)` |

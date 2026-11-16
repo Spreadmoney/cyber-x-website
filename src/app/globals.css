@@ -3,27 +3,105 @@
 @import "../shared/app-theme.css";
 
 /*
- * The website's own tokens, on top of the app's. The website's pages are
- * white, with pale and blue panels; the blue panels and the pale print are
- * added with the menu bar and Home (W1).
+ * The website's own tokens, on top of the app's, taken from the Figma file
+ * "CYBER X WEB" (light theme). The website's pages are white, with pale
+ * ("paper") and blue print panels.
  */
 @theme {
   --color-bg: #ffffff;
   --color-paper: #f3f5f9;
+
+  /* Words */
+  --color-fg: #0b0d12; /* text/primary */
+  --color-muted-fg: #5b6270; /* text/secondary */
+  --color-deep: #0b3fad; /* accent/deep: words on tags and white chips */
+  --color-line: #e3e7ef; /* border/hairline */
+
+  /* Fills */
+  --color-tag: #dce6fa;
+  --color-icon-bg: #e6eeff;
+  --color-avatar: #dce8ff;
+  --color-soft: #f1f4f9;
+  --color-info-bg: #eaf1ff;
+  --color-ok-bg: #dff3ec;
+  --color-note-ok-bg: #e6f5ef;
+  --color-note-ok: #0f6e56;
+  --color-warn-bg: #fff1d6;
+  --color-warn-fg: #7a4a00;
+
+  /* Shadows */
+  --shadow-pill: 0 8px 24px rgb(3 14 60 / 0.12);
+  --shadow-glass: 0 12px 32px rgb(10 23 77 / 0.2);
+  --shadow-glass-soft: 0 12px 32px rgb(10 23 77 / 0.18);
+  --shadow-chip: 0 10px 24px rgb(10 23 77 / 0.22);
+  --shadow-tile: 0 8px 12px rgb(10 23 77 / 0.06);
+  --shadow-bar: 0 18px 40px rgb(10 23 77 / 0.3);
 }
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* In-page links (#team) land below the fixed menu bar. */
+  scroll-padding-top: calc(90px + env(safe-area-inset-top));
 }
 
 body {
   background: var(--color-bg);
-  color: var(--color-ink);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* A long name with no spaces breaks onto the next line instead of running
      out of its card. Names are never cut off. */
   overflow-wrap: break-word;
+}
+
+/* The blue and paper print panels (Figma "Print panel"). */
+.panel-blue {
+  background-image: linear-gradient(129deg, #0b3fad 13.235%, #0a5cff 50%, #2b72ff 86.765%);
+  color: #ffffff;
+}
+.panel-blue-reverse {
+  background-image: linear-gradient(119deg, #2b72ff 13.235%, #0a5cff 50%, #0b3fad 86.765%);
+  color: #ffffff;
+}
+.panel-paper {
+  background-image: linear-gradient(124deg, #e6ecf8 13.235%, #eef2fa 50%, #f5f7fc 86.765%);
+}
+
+/* The guilloche security print. The picture is used as a mask so one file
+   draws white on blue panels and blue on paper ones. */
+.rosette {
+  position: absolute;
+  pointer-events: none;
+  mask-image: url("/print/rosette.png");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url("/print/rosette.png");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Accordion markers: the browser's own triangle is replaced by + and −. */
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-sheet[data-open="true"] {
+    animation: menu-in 160ms ease-out;
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

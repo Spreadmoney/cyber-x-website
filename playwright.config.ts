@@ -48,6 +48,8 @@ export default defineConfig({
     ? undefined
     : {
         command: `npm run build && npm run start -- --port ${PORT}`,
+        // Only on test machines: /error-check fails on purpose (e2e/system.spec.ts).
+        env: { ENABLE_ERROR_PAGE_CHECK: "1" },
         url: baseURL,
         reuseExistingServer: !isCI,
         timeout: 240_000,

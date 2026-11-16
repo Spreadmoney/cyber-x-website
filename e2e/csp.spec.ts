@@ -6,7 +6,7 @@ import { expect, test, type Page } from "@playwright/test";
  * a page as the server sends it, inline event handlers, scripts from other
  * sites, framing by another site, and sending data elsewhere.
  */
-const PAGES = ["/"];
+const PAGES = ["/", "/get-the-app", "/maintenance"];
 
 /** Records every policy violation the page reports, from before it loads. */
 async function watchViolations(page: Page) {
@@ -82,7 +82,7 @@ test.describe("Content-Security-Policy", () => {
     await page.setContent(`<iframe id="frame" src="${baseURL}/"></iframe>`);
     await page.waitForTimeout(1500);
     const framed = page.frameLocator("#frame");
-    await expect(framed.getByRole("heading", { name: "Cyber X" })).toHaveCount(0);
+    await expect(framed.getByRole("heading", { level: 1 })).toHaveCount(0);
   });
 
   test("even code that did run couldn't send data to another site", async ({ page }) => {

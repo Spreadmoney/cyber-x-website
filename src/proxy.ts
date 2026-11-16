@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { buildCsp, newNonce } from "@/lib/security/csp";
+import { maintenanceRewrite } from "@/lib/site/maintenance";
 
 /**
  * Runs before every page: makes this page view's one-time key (nonce) and
@@ -15,7 +16,13 @@ export function proxy(request: NextRequest) {
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("Content-Security-Policy", policy);
 
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  // While the maintenance switch is on, every page shows the maintenance page.
+  const maintenance = maintenanceRewrite(request.nextUrl.pathname);
+  const response = maintenance
+    ? NextResponse.rewrite(new URL(maintenance, request.url), {
+        request: { headers: requestHeaders },
+      })
+    : NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("Content-Security-Policy", policy);
   return response;
 }
