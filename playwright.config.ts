@@ -8,7 +8,7 @@ import { defineConfig, devices } from "@playwright/test";
 const PORT = Number(process.env.PORT ?? 3200);
 /**
  * Set E2E_BASE_URL to test a deployed copy instead of a local build, e.g.
- *   E2E_BASE_URL=https://cyber-x-website.vercel.app npm run e2e
+ *   E2E_BASE_URL=https://cyber-x-website-chi.vercel.app npm run e2e
  */
 const deployedURL = process.env.E2E_BASE_URL;
 const baseURL = deployedURL ?? `http://localhost:${PORT}`;

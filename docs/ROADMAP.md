@@ -19,6 +19,13 @@ https://claude.ai/artifact/2vZ9HoymNGP2QyDJJH3NpX
 - No domain for the demo: the website and the app each have their own
   vercel.app address (APP_URL and WEBSITE_URL, set in both projects).
 
+## Addresses
+
+| What        | Address                                | GitHub                      |
+| ----------- | -------------------------------------- | --------------------------- |
+| The website | https://cyber-x-website-chi.vercel.app | Spreadmoney/cyber-x-website |
+| The app     | https://cyber-x-eosin.vercel.app       | Spreadmoney/cyber-x         |
+
 ## Stages
 
 One stage at a time. A stage is finished only when it passes the quality gate

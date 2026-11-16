@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { readAddresses } from "./addresses";
 
 const APP = "https://cyber-x-eosin.vercel.app";
-const SITE = "https://cyber-x-website.vercel.app";
+const SITE = "https://cyber-x-website-chi.vercel.app";
 
 describe("readAddresses", () => {
   it("uses the two local previews on a laptop", () => {
