@@ -43,6 +43,19 @@ The list is in `scripts/shared/list.mjs`. Every copy starts with a note saying
 where it came from. `check:shared` runs before every build, so a drifted copy
 never reaches Vercel.
 
+## The database (W2)
+
+The website reaches the app's Supabase database with its own login,
+`cyberx_website`, which can only run the functions in the `web` section
+(sign-in, the website's sessions, Your account, Freeze my account). Those
+functions live in Codebase (`supabase/migrations/20261116233000_web_signin.sql`)
+and are copied into `db/migrations` with the shared parts, so the tests can
+build a real database.
+
+The sign-in tests need a throwaway local Postgres. Set `E2E_DATABASE_ADMIN_URL`
+and `E2E_DATABASE_URL` (see `.env.example`) and `npm run e2e` builds it first;
+without them those tests are skipped. CI always runs them.
+
 ## Where things are
 
 | Folder           | What's in it                                       |

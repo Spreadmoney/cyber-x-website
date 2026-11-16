@@ -11,6 +11,8 @@ const PAGES_WITH_FIELDS = [
   "/blog/search?q=scam",
   "/help",
   "/help/search?q=withdraw",
+  "/sign-in",
+  "/freeze",
 ];
 
 test.describe("Form fields", () => {

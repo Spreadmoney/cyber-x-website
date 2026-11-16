@@ -96,7 +96,8 @@ describe("isBuilt", () => {
     expect(isBuilt("/about#team")).toBe(true);
     expect(isBuilt("/blog")).toBe(true);
     expect(isBuilt("/careers")).toBe(false);
-    expect(isBuilt("/sign-in")).toBe(false);
+    expect(isBuilt("/sign-in")).toBe(true);
+    expect(isBuilt("/check")).toBe(false);
     expect(isBuilt("/get-the-app?from=home")).toBe(true);
     expect(isBuilt("/maintenance")).toBe(true);
   });

@@ -48,8 +48,14 @@ export default defineConfig({
     ? undefined
     : {
         command: `npm run build && npm run start -- --port ${PORT}`,
-        // Only on test machines: /error-check fails on purpose (e2e/system.spec.ts).
-        env: { ENABLE_ERROR_PAGE_CHECK: "1" },
+        env: {
+          // Only on test machines: /error-check fails on purpose (e2e/system.spec.ts).
+          ENABLE_ERROR_PAGE_CHECK: "1",
+          // The website's own address, so passkeys are checked against it.
+          WEBSITE_URL: baseURL,
+          // The throwaway test database (scripts/db/test-db.mjs), when there is one.
+          ...(process.env.E2E_DATABASE_URL ? { DATABASE_URL: process.env.E2E_DATABASE_URL } : {}),
+        },
         url: baseURL,
         reuseExistingServer: !isCI,
         timeout: 240_000,

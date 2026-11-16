@@ -9,8 +9,8 @@
 export const PAGES = {
   home: { href: "/", built: true },
   getTheApp: { href: "/get-the-app", built: true },
-  signIn: { href: "/sign-in", built: false },
-  freeze: { href: "/freeze", built: false },
+  signIn: { href: "/sign-in", built: true },
+  freeze: { href: "/freeze", built: true },
   check: { href: "/check", built: false },
   report: { href: "/report", built: false },
   features: { href: "/features", built: true },

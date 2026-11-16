@@ -60,6 +60,70 @@
     "src/lib/phone.test.ts": {
       "from": "src/lib/phone.test.ts",
       "sha256": "ccfb29adb43fbdca96fc3b445d39c3d989c7bdd2735481ba01021ee149283799"
+    },
+    "db/local-supabase-shim.sql": {
+      "from": "scripts/db/local-supabase-shim.sql",
+      "sha256": "3dc2277803de46f2370aa7497e85371b4f2b78f4314bfa505b5f068680fc9e9c"
+    },
+    "db/migrations/20261113120000_identity_foundation.sql": {
+      "from": "supabase/migrations/20261113120000_identity_foundation.sql",
+      "sha256": "8cb4a5e8e8c46ee73a372950fd70892ff38b1cded51d5d3f0903e375feecd4ba"
+    },
+    "db/migrations/20261113160000_alias_reserved_words_anywhere.sql": {
+      "from": "supabase/migrations/20261113160000_alias_reserved_words_anywhere.sql",
+      "sha256": "677d6331e8e3564db97ba67b6014f148d859dd1a7d6e82e907bc3224e259b5c1"
+    },
+    "db/migrations/20261114180000_signups.sql": {
+      "from": "supabase/migrations/20261114180000_signups.sql",
+      "sha256": "41fa744af147d98d500fe327e6c8194c815f57579b1c5f83f6bd551455158d0f"
+    },
+    "db/migrations/20261114210000_signup_phone.sql": {
+      "from": "supabase/migrations/20261114210000_signup_phone.sql",
+      "sha256": "5a044227bd684bd8afa1ac3321adca3f8b27188c809acb4bfdf4f261b77259ab"
+    },
+    "db/migrations/20261114230000_signup_account.sql": {
+      "from": "supabase/migrations/20261114230000_signup_account.sql",
+      "sha256": "967a170d48a1cc4c37e5d7b1cf1836f15d583ec45503906d47b4267dbbe12a06"
+    },
+    "db/migrations/20261115080000_signup_finish.sql": {
+      "from": "supabase/migrations/20261115080000_signup_finish.sql",
+      "sha256": "9a73f647e6e795f31bee1db23658a17e5070a03aea36048ec4a8e8a65b0b1254"
+    },
+    "db/migrations/20261115120000_signup_decisions.sql": {
+      "from": "supabase/migrations/20261115120000_signup_decisions.sql",
+      "sha256": "9a2986c10a982074f25b91b76050cccf194ecda0a11cb4eb2a0254ed7c350ade"
+    },
+    "db/migrations/20261116090000_signin.sql": {
+      "from": "supabase/migrations/20261116090000_signin.sql",
+      "sha256": "fe1e2b17f47f5f411183c50616639bb389cd4c41f042e5a9461d439b2a437cea"
+    },
+    "db/migrations/20261116150000_website_login.sql": {
+      "from": "supabase/migrations/20261116150000_website_login.sql",
+      "sha256": "dffe579c77e7a36afffcfd755c7152ab3693421367d888ac25c4f594d817d9c2"
+    },
+    "db/migrations/20261116160000_unlock.sql": {
+      "from": "supabase/migrations/20261116160000_unlock.sql",
+      "sha256": "36188c61bdfe61790fde3b3090d410eead780dfc1c1ca5c11025c4a7909de270"
+    },
+    "db/migrations/20261116180000_freeze.sql": {
+      "from": "supabase/migrations/20261116180000_freeze.sql",
+      "sha256": "e0444b54eabe7ac26f14a282665e33e4ab9709699e05dc98140e661aab876307"
+    },
+    "db/migrations/20261116200000_recovery.sql": {
+      "from": "supabase/migrations/20261116200000_recovery.sql",
+      "sha256": "f08fa10339bc92035f9ff3188a9cf3218c54a32479729c1deed5941217c67b7e"
+    },
+    "db/migrations/20261116220000_phone_move.sql": {
+      "from": "supabase/migrations/20261116220000_phone_move.sql",
+      "sha256": "63ebc72f6f2c1836c0ca1217a482b3d69ac6b85e619b36145b5b86afe80f7174"
+    },
+    "db/migrations/20261116230000_approvals.sql": {
+      "from": "supabase/migrations/20261116230000_approvals.sql",
+      "sha256": "8fb3ead8b1d74bffb9cc24c0768975892c0cea121c3df0231adb1994b0024ef8"
+    },
+    "db/migrations/20261116233000_web_signin.sql": {
+      "from": "supabase/migrations/20261116233000_web_signin.sql",
+      "sha256": "d3e3ac2fb188474653be9bac0cac01ddea77e2949dbe136d0584de93cadee5d0"
     }
   }
 }

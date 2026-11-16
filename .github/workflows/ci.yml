@@ -38,7 +38,19 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps webkit chromium
+      # Sign in and freeze (W2) are tested against a real database: a
+      # throwaway local Postgres with every app migration, never the real
+      # Supabase project.
+      - name: Start a throwaway database (never the real project)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q postgresql-16-pgtap
+          sudo systemctl start postgresql
+          sudo -u postgres psql -c "alter user postgres password 'postgres'"
       - run: npm run e2e
+        env:
+          E2E_DATABASE_ADMIN_URL: postgres://postgres:postgres@localhost:5432/postgres
+          E2E_DATABASE_URL: postgres://postgres:postgres@localhost:5432/cyberx_web_e2e
       - run: npm run check:dev
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

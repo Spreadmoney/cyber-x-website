@@ -351,6 +351,7 @@ const NOTE_TONES = {
   amber: "bg-warn-bg text-warn-fg",
   grey: "bg-soft text-muted-fg",
   glass: "bg-white/14 text-white/82",
+  red: "bg-[#fdecec] text-[#b42318]",
 } as const;
 
 export function Note({
