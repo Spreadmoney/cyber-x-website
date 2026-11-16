@@ -6,7 +6,17 @@ import { expect, test, type Page } from "@playwright/test";
  * a page as the server sends it, inline event handlers, scripts from other
  * sites, framing by another site, and sending data elsewhere.
  */
-const PAGES = ["/", "/get-the-app", "/maintenance", "/features", "/fees-and-limits", "/cookies"];
+const PAGES = [
+  "/",
+  "/get-the-app",
+  "/maintenance",
+  "/features",
+  "/fees-and-limits",
+  "/cookies",
+  "/blog",
+  "/blog/five-scams",
+  "/help/how-do-i-freeze-my-account",
+];
 
 /** Records every policy violation the page reports, from before it loads. */
 async function watchViolations(page: Page) {

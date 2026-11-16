@@ -29,6 +29,13 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Blog posts and help articles are files read on the server (W8.1).
+  outputFileTracingIncludes: {
+    "/blog": ["./content/blog/**/*.md"],
+    "/blog/**": ["./content/blog/**/*.md"],
+    "/help": ["./content/help/**/*.md"],
+    "/help/**": ["./content/help/**/*.md"],
+  },
   turbopack: {
     rules: {
       "*.css": {

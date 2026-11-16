@@ -15,6 +15,7 @@ import {
   Tile,
 } from "@/components/kit/Kit";
 import { ArrowLink } from "@/components/site/Button";
+import { TEAM, photoOf, type TeamKey } from "@/content/team";
 import { readAddresses } from "@/lib/env/addresses";
 import { href } from "@/lib/site/routes";
 
@@ -23,19 +24,6 @@ export const metadata: Metadata = {
   description:
     "Cyber X Technologies is building a financial system where every payment knows who it’s for and why.",
 };
-
-/**
- * The team pictures are AI samples Ayora approved for the demo (15 Nov 2026),
- * and four of the five names are made up. The page says so, and they are
- * replaced before launch.
- */
-const TEAM = [
-  { photo: "ayora", name: "Ayora Okafor", role: "Founder" },
-  { photo: "emeka", name: "Emeka Obi", role: "Head of Engineering" },
-  { photo: "ifeoma", name: "Ifeoma Nwankwo", role: "Head of Risk and Compliance" },
-  { photo: "zainab", name: "Zainab Bello", role: "Head of Design" },
-  { photo: "seun", name: "Seun Ogunleye", role: "Head of Partnerships" },
-] as const;
 
 export default function AboutPage() {
   const { appUrl } = readAddresses();
@@ -62,7 +50,7 @@ export default function AboutPage() {
             </blockquote>
             <figcaption className="flex items-center gap-3">
               <Image
-                src="/team/sample-ayora.jpg"
+                src={photoOf("ayora")}
                 alt=""
                 width={52}
                 height={52}
@@ -145,13 +133,13 @@ export default function AboutPage() {
         rosetteAt={[0.12, 0.3]}
       >
         <ul className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-6">
-          {TEAM.map((person) => (
+          {(Object.entries(TEAM) as [TeamKey, (typeof TEAM)[TeamKey]][]).map(([key, person]) => (
             <li
               key={person.name}
               className="shadow-glass flex items-center gap-3.5 rounded-[20px] border border-white/50 bg-white/14 p-3.5 lg:flex-col lg:items-stretch lg:gap-3 lg:rounded-[24px]"
             >
               <Image
-                src={`/team/sample-${person.photo}.jpg`}
+                src={photoOf(key)}
                 alt=""
                 width={400}
                 height={400}

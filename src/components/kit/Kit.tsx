@@ -40,9 +40,9 @@ export function PageHero({
 }: {
   tone?: "blue" | "paper";
   tag?: string;
-  crumb?: string;
+  crumb?: ReactNode;
   title: string;
-  sub: string;
+  sub?: string;
   after?: ReactNode;
   card?: ReactNode;
 }) {
@@ -52,13 +52,19 @@ export function PageHero({
       <div
         className={`${WRAP} flex flex-col gap-6 pt-8 pb-7 lg:flex-row lg:items-center lg:justify-between lg:gap-20 lg:py-20`}
       >
-        <div className="flex max-w-[592px] flex-col items-start gap-3 lg:gap-5">
-          {crumb ? <p className={`${TYPE.cap} ${muted(dark)}`}>{crumb}</p> : null}
+        <div
+          className={`flex ${card ? "max-w-[592px]" : "w-full"} flex-col items-start gap-3 lg:gap-5`}
+        >
+          {typeof crumb === "string" ? (
+            <p className={`${TYPE.cap} ${muted(dark)}`}>{crumb}</p>
+          ) : (
+            crumb
+          )}
           {tag ? <Tag tone={dark ? "blue" : "paper"}>{tag}</Tag> : null}
           <h1 id="page-title" className={TYPE.hero}>
             {title}
           </h1>
-          <p className={`${TYPE.body} ${muted(dark)}`}>{sub}</p>
+          {sub ? <p className={`${TYPE.body} max-w-[820px] ${muted(dark)}`}>{sub}</p> : null}
           {after}
         </div>
         {card ? <Frost className="w-full lg:w-[480px] lg:shrink-0 lg:p-8">{card}</Frost> : null}
@@ -167,6 +173,7 @@ export function Tile({
   title,
   desc,
   link,
+  action,
   dark,
 }: {
   icon?: IconName | "spark";
@@ -175,6 +182,8 @@ export function Tile({
   title: string;
   desc?: string;
   link?: { label: string; href: string };
+  /** A button at the foot of the tile (Figma Help centre, "Urgent"). */
+  action?: ReactNode;
   dark?: boolean;
 }) {
   const box = dark
@@ -192,6 +201,7 @@ export function Tile({
           {link.label}
         </ArrowLink>
       ) : null}
+      {action ? <div className="mt-auto w-full pt-1.5">{action}</div> : null}
     </li>
   );
 }
@@ -204,9 +214,14 @@ export function Rows({
 }: {
   items: readonly (readonly [string, ReactNode])[];
   dark?: boolean;
-  labelWidth?: 200 | 220 | 400;
+  labelWidth?: 120 | 200 | 220 | 400;
 }) {
-  const width = { 200: "lg:w-[200px]", 220: "lg:w-[220px]", 400: "lg:w-[400px]" }[labelWidth];
+  const width = {
+    120: "lg:w-[120px]",
+    200: "lg:w-[200px]",
+    220: "lg:w-[220px]",
+    400: "lg:w-[400px]",
+  }[labelWidth];
   return (
     <dl>
       {items.map(([title, text]) => (
@@ -271,13 +286,13 @@ export function Steps({
   items,
   dark,
 }: {
-  items: readonly (readonly [string, string])[];
+  items: readonly (readonly [ReactNode, ReactNode?])[];
   dark?: boolean;
 }) {
   return (
     <ol className="flex flex-col gap-3.5 lg:gap-5">
       {items.map(([title, desc], index) => (
-        <li key={title} className="flex gap-3.5">
+        <li key={index} className="flex gap-3.5">
           <span
             className={`flex size-7 shrink-0 items-center justify-center rounded-full ${TYPE.lab} text-deep ${dark ? "bg-white" : "bg-icon-bg"}`}
           >
@@ -285,7 +300,7 @@ export function Steps({
           </span>
           <span className="flex flex-col gap-0.5 pt-[3px]">
             <span className={TYPE.h4}>{title}</span>
-            <span className={`${TYPE.p} ${muted(dark)}`}>{desc}</span>
+            {desc ? <span className={`${TYPE.p} ${muted(dark)}`}>{desc}</span> : null}
           </span>
         </li>
       ))}

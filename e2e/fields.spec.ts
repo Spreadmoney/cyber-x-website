@@ -5,7 +5,13 @@ import { expect, test } from "@playwright/test";
  * is smaller than 16px, and the page stays zoomed (Ayora, 16 Nov). Every
  * field people type into must be 16px or more on phones.
  */
-const PAGES_WITH_FIELDS = ["/fees-and-limits"];
+const PAGES_WITH_FIELDS = [
+  "/fees-and-limits",
+  "/blog",
+  "/blog/search?q=scam",
+  "/help",
+  "/help/search?q=withdraw",
+];
 
 test.describe("Form fields", () => {
   for (const path of PAGES_WITH_FIELDS) {
