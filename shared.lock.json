@@ -1,0 +1,65 @@
+{
+  "source": "Codebase",
+  "files": {
+    "src/shared/app-theme.css": {
+      "from": "src/app/globals.css",
+      "sha256": "61908ac8c28a29efb604766d5fe2cc7fe4648b48c6700cd4991f9daa5532a4ed"
+    },
+    "src/components/brand/Wordmark.tsx": {
+      "from": "src/components/brand/Wordmark.tsx",
+      "sha256": "99205f09bd5916017db1c4f0fa96da6b5c5beadf39ceb0bafc14f173fd702ce2"
+    },
+    "src/components/brand/Wordmark.test.tsx": {
+      "from": "src/components/brand/Wordmark.test.tsx",
+      "sha256": "1504f983cdfbb9d906bb912bc3370dc8a332ed94b047b105103355ed6c8b2b2d"
+    },
+    "src/app/icon.svg": {
+      "from": "src/app/icon.svg",
+      "sha256": "97da53f621620b4559d597c3d8cc73b65da638a5b932b06db128c6eae442271c"
+    },
+    "src/app/apple-icon.png": {
+      "from": "src/app/apple-icon.png",
+      "sha256": "fb83bd55c5cdac592ae9fcfbb66177e944b02292e63a9f76b43d4eb1e6cffd35"
+    },
+    "src/config/countries/index.ts": {
+      "from": "src/config/countries/index.ts",
+      "sha256": "83e33adc2f882ff664fa1dc7a7cc31a083db29dbdf9d3e2784da162b8c52f4d9"
+    },
+    "src/config/countries/ng.ts": {
+      "from": "src/config/countries/ng.ts",
+      "sha256": "e8a579cb29a9b8c8938ac70f2354cf128aa2dab3dcb7b28224497420c2cbad3d"
+    },
+    "src/config/countries/types.ts": {
+      "from": "src/config/countries/types.ts",
+      "sha256": "bf322511c639f96dcc1a5e9130fdc79fc08bd5bb0ebd37f11d7f82bcb2933bd3"
+    },
+    "src/config/countries/countries.test.ts": {
+      "from": "src/config/countries/countries.test.ts",
+      "sha256": "a963edfeafc804ce3178f0644adfd5525395995bcff1599013ff45803ec26e1c"
+    },
+    "src/lib/money.ts": {
+      "from": "src/lib/money.ts",
+      "sha256": "a9f9c4964feda26ef918017a64e79be986070f531a4740e6e037a42d3c8e626a"
+    },
+    "src/lib/money.test.ts": {
+      "from": "src/lib/money.test.ts",
+      "sha256": "9e7cbf4bda96c7ef3b18ecddc84ca9932a00ab5e20a3bc5dc64b8e7c057de3f2"
+    },
+    "src/lib/alias.ts": {
+      "from": "src/lib/alias.ts",
+      "sha256": "fcee28129e1224628b981e083cad6e77b23eee4348e7b4a158dc0eda35996d07"
+    },
+    "src/lib/alias.test.ts": {
+      "from": "src/lib/alias.test.ts",
+      "sha256": "304420ded07380501e2b8bebdfcff73fffcafd0c3fb8a11a3eb98fa40e04f3ac"
+    },
+    "src/lib/phone.ts": {
+      "from": "src/lib/phone.ts",
+      "sha256": "237ec28f8e476ed18645498129190914056b327824cf77cff7ea5005aa333a58"
+    },
+    "src/lib/phone.test.ts": {
+      "from": "src/lib/phone.test.ts",
+      "sha256": "ccfb29adb43fbdca96fc3b445d39c3d989c7bdd2735481ba01021ee149283799"
+    }
+  }
+}

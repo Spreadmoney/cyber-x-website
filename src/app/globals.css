@@ -1,0 +1,29 @@
+@import "tailwindcss";
+/* The app's design tokens (colours, type, shapes, motion), synced from Codebase. */
+@import "../shared/app-theme.css";
+
+/*
+ * The website's own tokens, on top of the app's. The website's pages are
+ * white, with pale and blue panels; the blue panels and the pale print are
+ * added with the menu bar and Home (W1).
+ */
+@theme {
+  --color-bg: #ffffff;
+  --color-paper: #f3f5f9;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* A long name with no spaces breaks onto the next line instead of running
+     out of its card. Names are never cut off. */
+  overflow-wrap: break-word;
+}
