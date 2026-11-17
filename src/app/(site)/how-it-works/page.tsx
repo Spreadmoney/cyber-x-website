@@ -200,7 +200,7 @@ export default async function HowItWorksPage() {
           left={
             <ButtonLink
               href={href("check")}
-              variant="secondary"
+              variant="soft"
               className="w-full lg:w-auto lg:self-start"
             >
               Check a payment

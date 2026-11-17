@@ -92,7 +92,7 @@ export default async function FreezePage() {
               Freeze my account
             </Button>
           </form>
-          <ButtonLink href="/account" variant="secondary">
+          <ButtonLink href="/account" variant="soft">
             Cancel
           </ButtonLink>
         </div>

@@ -156,7 +156,7 @@ describe("finding your way", () => {
     expect(screen.getByRole("link", { name: "Freeze my account" }).className).toContain(
       "bg-error-text",
     );
-    expect(screen.getByRole("link", { name: "Report a scam" }).className).toContain("border-fg");
+    expect(screen.getByRole("link", { name: "Report a scam" }).className).toContain("bg-accent/10");
     rerender(<Actions actions={["check"]} />);
     expect(screen.getByRole("link", { name: "Check a payment" }).className).toContain("bg-accent");
     rerender(<Actions actions={[]} />);

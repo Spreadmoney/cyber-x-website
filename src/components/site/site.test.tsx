@@ -19,6 +19,8 @@ describe("buttons and links", () => {
     expect(buttonClass()).toContain("bg-accent");
     expect(buttonClass("white", "S")).toContain("h-8");
     expect(buttonClass("secondary")).toContain("border-fg");
+    expect(buttonClass("soft")).toContain("bg-accent/10");
+    expect(buttonClass("quiet")).toContain("bg-fg/6");
     expect(buttonClass("outline-light")).toContain("border-white/70");
   });
 

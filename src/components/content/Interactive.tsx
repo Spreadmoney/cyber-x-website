@@ -46,10 +46,10 @@ export function Helpful({ contactHref }: { contactHref: string }) {
       </h2>
       {answer === null ? (
         <div className="flex gap-2.5">
-          <Button variant="secondary" size="S" onClick={() => setAnswer("yes")}>
+          <Button variant="soft" size="S" onClick={() => setAnswer("yes")}>
             Yes
           </Button>
-          <Button variant="secondary" size="S" onClick={() => setAnswer("no")}>
+          <Button variant="soft" size="S" onClick={() => setAnswer("no")}>
             No
           </Button>
         </div>

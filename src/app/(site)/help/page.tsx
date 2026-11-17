@@ -64,7 +64,7 @@ export default function HelpPage() {
             title="Been scammed?"
             desc="Report it now so we can act on it."
             action={
-              <ButtonLink href={href("report")} variant="secondary" className="w-full">
+              <ButtonLink href={href("report")} variant="soft" className="w-full">
                 Report a scam
               </ButtonLink>
             }
@@ -74,7 +74,7 @@ export default function HelpPage() {
             title="Not sure a payment is real?"
             desc="Check it with the reference and amount."
             action={
-              <ButtonLink href={href("check")} variant="secondary" className="w-full">
+              <ButtonLink href={href("check")} variant="soft" className="w-full">
                 Check a payment
               </ButtonLink>
             }

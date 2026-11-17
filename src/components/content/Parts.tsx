@@ -258,7 +258,7 @@ export function Actions({ actions }: { actions: readonly Action[] }) {
         <ButtonLink
           key={key}
           href={ACTIONS[key].href()}
-          variant={key === "freeze" ? "danger" : index === 0 ? "primary" : "secondary"}
+          variant={key === "freeze" ? "danger" : index === 0 ? "primary" : "soft"}
           className="w-full lg:w-auto"
         >
           {ACTIONS[key].label}

@@ -44,7 +44,7 @@ export default async function FrozenPage() {
               Test mode: no SMS is sent yet. Once it is, we’ll tell you by SMS, and by email if you
               added one.
             </Note>
-            <ButtonLink href="/" variant="secondary">
+            <ButtonLink href="/" variant="soft">
               Done
             </ButtonLink>
           </div>

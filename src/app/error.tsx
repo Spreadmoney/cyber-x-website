@@ -36,7 +36,7 @@ export default function ErrorPage({ error, retry }: { error: unknown; retry: () 
           <Button onClick={() => retry()} className="w-full lg:w-auto">
             Try again
           </Button>
-          <ButtonLink href="/" variant="secondary" className="w-full lg:w-auto">
+          <ButtonLink href="/" variant="soft" className="w-full lg:w-auto">
             Go to Home
           </ButtonLink>
         </>

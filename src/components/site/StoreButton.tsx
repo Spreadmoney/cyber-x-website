@@ -52,7 +52,7 @@ function ComingSheet({
           <button
             type="button"
             onClick={() => dialog.current?.close()}
-            className={`${buttonClass("secondary")} w-full`}
+            className={`${buttonClass("soft")} w-full`}
           >
             Close
           </button>

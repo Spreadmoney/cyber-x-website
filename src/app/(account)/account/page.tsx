@@ -166,7 +166,7 @@ export default async function AccountPage() {
                   {place.kind === "phone" && place.signedIn ? (
                     <form action={signOutPhone}>
                       <input type="hidden" name="phone" value={place.id} />
-                      <Button type="submit" variant="secondary" size="S">
+                      <Button type="submit" variant="quiet" size="S">
                         Sign out
                       </Button>
                     </form>

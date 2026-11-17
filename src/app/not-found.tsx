@@ -19,7 +19,7 @@ export default function NotFound() {
           <h2 className="text-[17px] leading-[1.2] font-medium lg:text-[21px] lg:leading-[1.3]">
             Looking for something?
           </h2>
-          <ButtonLink href={href("help")} variant="secondary" className="w-full">
+          <ButtonLink href={href("help")} variant="soft" className="w-full">
             Search Help
           </ButtonLink>
           <div className="flex flex-col gap-3 border-t border-[rgb(10_19_56/0.1)] pt-4">
