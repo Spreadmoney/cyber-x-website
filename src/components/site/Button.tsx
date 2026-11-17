@@ -5,7 +5,7 @@ import type { ComponentProps, ReactNode } from "react";
  * Buttons from the Figma parts (Button · Primary / Secondary, sizes L and S),
  * plus the two used on blue panels: white, and a white outline.
  */
-export type ButtonVariant = "primary" | "secondary" | "white" | "outline-light" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "soft" | "white" | "outline-light" | "danger";
 export type ButtonSize = "L" | "S";
 
 const BASE =
@@ -14,6 +14,9 @@ const BASE =
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: "bg-accent text-white hover:bg-[#0952e6] focus-visible:outline-accent",
   secondary: "border border-fg text-fg hover:bg-fg/5 focus-visible:outline-fg",
+  // The second choice on newer pages: a blue tint instead of a black outline,
+  // which Ayora found low fidelity (17 Nov 2026).
+  soft: "bg-accent/10 text-accent hover:bg-accent/15 focus-visible:outline-accent",
   white: "bg-white text-fg hover:bg-white/90 focus-visible:outline-white",
   "outline-light":
     "border border-white/70 text-white hover:bg-white/10 focus-visible:outline-white",

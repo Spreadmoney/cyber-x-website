@@ -17,6 +17,7 @@ const PAGES = [
   "/blog/five-scams",
   "/help/how-do-i-freeze-my-account",
   "/sign-in",
+  "/check",
 ];
 
 /** Records every policy violation the page reports, from before it loads. */

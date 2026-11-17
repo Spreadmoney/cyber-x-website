@@ -13,6 +13,7 @@ const PAGES_WITH_FIELDS = [
   "/help/search?q=withdraw",
   "/sign-in",
   "/freeze",
+  "/check",
 ];
 
 test.describe("Form fields", () => {

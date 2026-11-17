@@ -4,7 +4,16 @@ import { expect, test } from "@playwright/test";
  * Using the website with a keyboard alone (WCAG 2.4.7, 2.4.11): every Tab
  * stop can be seen, shows a focus ring, and isn't hidden under the menu bar.
  */
-const PAGES = ["/", "/sign-in", "/freeze", "/help", "/blog", "/fees-and-limits", "/cookies"];
+const PAGES = [
+  "/",
+  "/sign-in",
+  "/freeze",
+  "/check",
+  "/help",
+  "/blog",
+  "/fees-and-limits",
+  "/cookies",
+];
 
 test.describe("Keyboard", () => {
   for (const path of PAGES) {

@@ -348,6 +348,25 @@ export function DataRow({
   );
 }
 
+/** Ticks beside short lines, under a page title (Figma Sign in, Check a payment). */
+export function Checklist({ items, dark = true }: { items: readonly string[]; dark?: boolean }) {
+  return (
+    <ul className="flex flex-col gap-2.5 pt-1">
+      {items.map((item) => (
+        <li
+          key={item}
+          className={`flex items-center gap-2.5 ${TYPE.p} ${dark ? "text-white" : "text-fg"}`}
+        >
+          <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white lg:size-6">
+            <Icon name="check-small" className="size-3.5" />
+          </span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /* A coloured note (Figma NOTE). */
 const NOTE_TONES = {
   blue: "bg-info-bg text-deep",

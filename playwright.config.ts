@@ -56,6 +56,8 @@ export default defineConfig({
           // Codes show on the screen only for test numbers: the made-up
           // accounts (e2e/helpers/accounts.ts) use +23480…; +23481… is not one.
           SMS_TEST_NUMBERS: "+23480*",
+          // The states of pages built ahead of the app, with Figma examples.
+          PAGE_PREVIEWS: "on",
           // The throwaway test database (scripts/db/test-db.mjs), when there is one.
           ...(process.env.E2E_DATABASE_URL ? { DATABASE_URL: process.env.E2E_DATABASE_URL } : {}),
         },

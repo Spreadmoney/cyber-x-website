@@ -11,7 +11,7 @@ export const PAGES = {
   getTheApp: { href: "/get-the-app", built: true },
   signIn: { href: "/sign-in", built: true },
   freeze: { href: "/freeze", built: true },
-  check: { href: "/check", built: false },
+  check: { href: "/check", built: true },
   report: { href: "/report", built: false },
   features: { href: "/features", built: true },
   howItWorks: { href: "/how-it-works", built: true },

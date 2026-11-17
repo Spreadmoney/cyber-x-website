@@ -3,9 +3,8 @@
 import { browserSupportsWebAuthn, startAuthentication } from "@simplewebauthn/browser";
 import { useEffect, useState, useTransition, type ReactNode } from "react";
 
-import { Note, PageHero, TYPE } from "@/components/kit/Kit";
+import { Checklist, Note, PageHero, TYPE } from "@/components/kit/Kit";
 import { ArrowLink, Button } from "@/components/site/Button";
-import { Icon } from "@/components/site/Icon";
 import { SiteLink } from "@/components/site/SiteLink";
 import {
   confirmSignInCode,
@@ -39,21 +38,6 @@ const clock = (ms: number) => {
   const seconds = Math.ceil(ms / 1000);
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 };
-
-function Checklist({ items }: { items: readonly string[] }) {
-  return (
-    <ul className="flex flex-col gap-2.5 pt-1">
-      {items.map((item) => (
-        <li key={item} className={`flex items-center gap-2.5 ${TYPE.p} text-white`}>
-          <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-white">
-            <Icon name="check-small" className="size-3.5" />
-          </span>
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 /**
  * Signing in on the website (W2.1, W2.2; Figma Sign in, Check it's you,
