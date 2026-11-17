@@ -86,6 +86,33 @@ describe("the sign-in card (W2.1)", () => {
     expect(screen.getByText("We texted a 6-digit code to +234 801 •••• 678.")).toBeInTheDocument();
   });
 
+  it("lists the other ways to sign in, each named by everything it shows", () => {
+    render(flow);
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Other ways to sign in" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Use a passkey Face ID or fingerprint" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Get a code by text Sent to your phone" }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows no code in test mode when the number isn't a test number", async () => {
+    actions.signInWithCode.mockResolvedValue({
+      ...codeState,
+      number: null,
+      testCode: undefined,
+      testMode: true,
+    });
+    render(flow);
+    await act(async () =>
+      fireEvent.click(screen.getByRole("button", { name: /^Get a code by text/ })),
+    );
+    expect(screen.getByText(/a code shows here only for Cyber X test numbers/)).toBeInTheDocument();
+  });
+
   it("resends a code, and goes back to the other ways", async () => {
     actions.signInWithCode.mockResolvedValue({ ...codeState, number: null, testCode: undefined });
     actions.resendSignInCode.mockResolvedValue({ step: "code", resendInMs: 30_000 });
@@ -94,7 +121,7 @@ describe("the sign-in card (W2.1)", () => {
       target: { value: "0801 234 5678" },
     });
     await act(async () =>
-      fireEvent.click(screen.getByRole("button", { name: "Get a code by text" })),
+      fireEvent.click(screen.getByRole("button", { name: /^Get a code by text/ })),
     );
     expect(actions.signInWithCode).toHaveBeenCalledWith("0801 234 5678");
     expect(
@@ -133,7 +160,7 @@ describe("the sign-in card (W2.1)", () => {
 
 describe("the passkey button (W2.2)", () => {
   const press = async () =>
-    act(async () => fireEvent.click(screen.getByRole("button", { name: "Use a passkey instead" })));
+    act(async () => fireEvent.click(screen.getByRole("button", { name: /^Use a passkey/ })));
 
   it("says when the browser can't, or the passkey didn't", async () => {
     webauthn.supported = false;

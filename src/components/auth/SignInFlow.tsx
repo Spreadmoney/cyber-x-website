@@ -18,7 +18,7 @@ import {
 } from "@/lib/auth/actions";
 import { MESSAGES, type NextPage } from "@/lib/auth/rules";
 
-import { Field, PasswordField } from "./Fields";
+import { Field, OtherWays, PasswordField } from "./Fields";
 
 type CodeStep = Extract<SignInState, { step: "code" }> & { number: string | null };
 
@@ -204,17 +204,23 @@ export function SignInFlow({
           <Button type="submit" variant="primary" disabled={pending} aria-busy={pending}>
             Continue
           </Button>
-          <p className={`${TYPE.cap} text-muted-fg text-center`}>or</p>
-          <Button variant="secondary" disabled={pending} onClick={usePasskey}>
-            Use a passkey instead
-          </Button>
-          <Button
-            variant="secondary"
+          <OtherWays
             disabled={pending}
-            onClick={() => run(() => signInWithCode(who))}
-          >
-            Get a code by text
-          </Button>
+            ways={[
+              {
+                title: "Use a passkey",
+                detail: "Face ID or fingerprint",
+                icon: "passkey",
+                onClick: usePasskey,
+              },
+              {
+                title: "Get a code by text",
+                detail: "Sent to your phone",
+                icon: "text",
+                onClick: () => run(() => signInWithCode(who)),
+              },
+            ]}
+          />
           <Note tone="grey" icon="lock">
             {note}
           </Note>
@@ -275,6 +281,11 @@ function CodeCard({
         <Note tone="blue">
           Test mode: no text is sent yet. Your code is{" "}
           <strong className="font-mono font-medium">{code.testCode}</strong>.
+        </Note>
+      ) : code.testMode ? (
+        <Note tone="blue">
+          Test mode: no text is sent yet, so a code shows here only for Cyber X test numbers. You
+          can sign in with a passkey instead.
         </Note>
       ) : null}
       {resend.left > 0 ? (

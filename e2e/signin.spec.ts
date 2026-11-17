@@ -118,6 +118,17 @@ test.describe("Sign in (W2.1)", () => {
     await expect(page).toHaveURL(/\/account$/);
   });
 
+  test("a number that isn't a test number gets no code on the screen", async ({ page }) => {
+    const bisi = await createAccount({ testNumber: false });
+    await page.goto("/sign-in");
+    await page.getByLabel("Cyber X ID, alias or phone number").fill(`@${bisi.alias}`);
+    await page.getByRole("button", { name: "Get a code by text" }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Check it’s you." })).toBeVisible();
+    await expect(page.getByText(/a code shows here only for Cyber X test numbers/)).toBeVisible();
+    await expect(card(page)).not.toContainText(/\d{6}/);
+    await noViolations(page);
+  });
+
   test("New to Cyber X? goes to Get the app (W2.6)", async ({ page }) => {
     await page.goto("/sign-in");
     await expect(page.getByRole("link", { name: /^Get the app/ }).last()).toHaveAttribute(
@@ -221,7 +232,7 @@ test.describe("Passkey from the app (W2.2)", () => {
     });
 
     await page.goto("/sign-in");
-    await page.getByRole("button", { name: "Use a passkey instead" }).click();
+    await page.getByRole("button", { name: "Use a passkey" }).click();
     await expect(page).toHaveURL(/\/account$/);
     await expect(page.getByText(ada.cyberxId)).toBeVisible();
     const [key] =

@@ -28,7 +28,7 @@ import {
   newSecret,
   visitorHash,
 } from "./secrets";
-import { deliverCode } from "./sms";
+import { SMS_SIMULATED, deliverCode } from "./sms";
 import * as store from "./store";
 
 /** Where a sign-in on the website has got to (W2.1). */
@@ -42,8 +42,10 @@ export type SignInState =
        * keeps what it showed.
        */
       number?: string | null;
-      /** Test mode only: the code, shown on the screen. */
+      /** Test mode only, and only for test numbers: the code, shown on the screen. */
       testCode?: string;
+      /** True while no text is sent: the screen says so. */
+      testMode?: boolean;
       expiresInMs?: number;
       resendInMs?: number;
       error?: string;
@@ -106,6 +108,7 @@ async function sendTheCode(secret: string, error?: string): Promise<SignInState>
     step: "code",
     number: sent.shownPhone ? maskedNumber(sent.phone) : null,
     testCode: delivery.showOnScreen,
+    testMode: SMS_SIMULATED,
     expiresInMs: (sent.expiresAt?.getTime() ?? now) - now,
     resendInMs: (sent.resendAt?.getTime() ?? now) - now,
     error,
@@ -206,7 +209,7 @@ export async function confirmSignInCode(next: string, code: string): Promise<Sig
   return result;
 }
 
-/** "Use a passkey instead": the request for the passkey made in the app (W2.2). */
+/** "Use a passkey": the request for the passkey made in the app (W2.2). */
 export async function passkeyOptions(): Promise<
   { options: PublicKeyCredentialRequestOptionsJSON } | { error: string } | { pausedMs: number }
 > {

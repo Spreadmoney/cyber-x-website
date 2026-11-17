@@ -53,6 +53,9 @@ export default defineConfig({
           ENABLE_ERROR_PAGE_CHECK: "1",
           // The website's own address, so passkeys are checked against it.
           WEBSITE_URL: baseURL,
+          // Codes show on the screen only for test numbers: the made-up
+          // accounts (e2e/helpers/accounts.ts) use +23480…; +23481… is not one.
+          SMS_TEST_NUMBERS: "+23480*",
           // The throwaway test database (scripts/db/test-db.mjs), when there is one.
           ...(process.env.E2E_DATABASE_URL ? { DATABASE_URL: process.env.E2E_DATABASE_URL } : {}),
         },

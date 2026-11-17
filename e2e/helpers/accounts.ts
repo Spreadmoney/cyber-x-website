@@ -32,9 +32,11 @@ export interface TestAccount {
 export async function createAccount({
   name = "Ayora Okafor",
   appSignedIn = true,
-}: { name?: string; appSignedIn?: boolean } = {}): Promise<TestAccount> {
+  testNumber = true,
+}: { name?: string; appSignedIn?: boolean; testNumber?: boolean } = {}): Promise<TestAccount> {
   const secret = `e2e-${randomBytes(8).toString("hex")}`;
-  const national = `80${String(randomInt(0, 100_000_000)).padStart(8, "0")}`;
+  // +23480… numbers are test numbers here (SMS_TEST_NUMBERS in playwright.config.ts).
+  const national = `${testNumber ? "80" : "81"}${String(randomInt(0, 100_000_000)).padStart(8, "0")}`;
   const phone = `+234${national}`;
   const alias = `ada${randomBytes(4).toString("hex")}`;
   const token = sha(secret);

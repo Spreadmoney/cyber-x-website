@@ -73,6 +73,8 @@ const sent = {
 const reject = (promise: Promise<unknown>) => expect(promise).rejects.toThrow(/REDIRECT/);
 
 beforeEach(() => {
+  // The made-up account's number is a test number, so its code shows.
+  vi.stubEnv("SMS_TEST_NUMBERS", "+2348012345678");
   jar.clear();
   set.mockClear();
   revalidate.mockClear();
@@ -152,6 +154,27 @@ describe("password, then a code", () => {
       testCode: expect.stringMatching(/^\d{6}$/),
     });
     expect(mocked.passwordResult).toHaveBeenCalledWith(expect.any(Buffer), true);
+  });
+
+  it("shows no code for a number that isn't a test number, the same as for no account", async () => {
+    vi.stubEnv("SMS_TEST_NUMBERS", "+2348099999999");
+    mocked.startSignin.mockResolvedValue({
+      pausedUntil: null,
+      passwordHash: null,
+      lockedUntil: null,
+    });
+    mocked.sendCode.mockResolvedValue({ ...sent, shownPhone: false });
+    const real = await actions.signInWithCode("@ayora");
+    mocked.sendCode.mockResolvedValue({ ...sent, deliver: false, phone: null, shownPhone: false });
+    const nobody = await actions.signInWithCode("@nobody");
+    for (const state of [real, nobody]) {
+      expect(state).toMatchObject({
+        step: "code",
+        number: null,
+        testCode: undefined,
+        testMode: true,
+      });
+    }
   });
 
   it("says locked, frozen, unavailable or gone", async () => {

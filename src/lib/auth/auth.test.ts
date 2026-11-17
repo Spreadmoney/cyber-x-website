@@ -155,3 +155,27 @@ describe("the database line", () => {
     expect(isConnectionError("x")).toBe(false);
   });
 });
+
+describe("test numbers", () => {
+  it("reads numbers written any way the sign-in box accepts, and number starts with *", async () => {
+    const { readTestNumbers, isTestNumber } = await import("./sms");
+    const numbers = readTestNumbers(
+      "0801 234 5678, +234 (803) 000-0001;\n+23490*, not a number, ,+12*",
+    );
+    expect([...numbers.exact]).toEqual(["+2348012345678", "+2348030000001"]);
+    expect(numbers.prefixes).toEqual(["+23490"]);
+    expect(isTestNumber("+2348012345678", numbers)).toBe(true);
+    expect(isTestNumber("+2349012345678", numbers)).toBe(true);
+    expect(isTestNumber("+2348112345678", numbers)).toBe(false);
+    expect(readTestNumbers(undefined).exact.size).toBe(0);
+  });
+
+  it("shows a code on the screen only for a test number while texts are off", async () => {
+    const { deliverCode } = await import("./sms");
+    vi.stubEnv("SMS_TEST_NUMBERS", "+2348012345678");
+    expect(await deliverCode("+2348012345678", "123456")).toEqual({ showOnScreen: "123456" });
+    expect(await deliverCode("+2348112345678", "123456")).toEqual({});
+    vi.stubEnv("SMS_TEST_NUMBERS", "");
+    expect(await deliverCode("+2348012345678", "123456")).toEqual({});
+  });
+});
