@@ -9,6 +9,8 @@ const PAGES = [
   "/sign-in",
   "/freeze",
   "/check",
+  "/report",
+  "/contact",
   "/help",
   "/blog",
   "/fees-and-limits",
@@ -39,9 +41,16 @@ test.describe("Keyboard", () => {
           let shown: Element = el;
           const box = el.getBoundingClientRect();
           if (box.width < 4 || box.height < 4) {
-            // A hidden switch shows itself through the drawing next to it.
+            // A hidden switch shows itself through the drawing next to it, and a
+            // hidden file picker through the drop area around it.
             if (el instanceof HTMLInputElement && el.type === "checkbox" && el.nextElementSibling) {
               shown = el.nextElementSibling;
+            } else if (
+              el instanceof HTMLInputElement &&
+              el.type === "file" &&
+              el.closest("label")
+            ) {
+              shown = el.closest("label")!;
             } else {
               return `${name} can't be seen`;
             }

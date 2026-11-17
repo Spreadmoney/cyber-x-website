@@ -18,6 +18,8 @@ const PAGES = [
   "/help/how-do-i-freeze-my-account",
   "/sign-in",
   "/check",
+  "/report",
+  "/r/k7Q2mX9pLw",
 ];
 
 /** Records every policy violation the page reports, from before it loads. */

@@ -14,6 +14,10 @@ const PAGES_WITH_FIELDS = [
   "/sign-in",
   "/freeze",
   "/check",
+  "/report",
+  "/contact",
+  "/complaints",
+  "/careers",
 ];
 
 test.describe("Form fields", () => {
@@ -22,7 +26,8 @@ test.describe("Form fields", () => {
       await page.goto(path);
       const sizes = await page
         .locator(
-          "input:not([type=checkbox]):not([type=radio]):not([type=hidden]), select, textarea",
+          // A file picker opens a chooser; there is nothing to type, so no zoom.
+          "input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=file]), select, textarea",
         )
         .evaluateAll((fields) =>
           fields.map((field) => parseFloat(getComputedStyle(field).fontSize)),
