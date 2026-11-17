@@ -20,6 +20,8 @@ const PAGES = [
   "/check",
   "/report",
   "/r/k7Q2mX9pLw",
+  "/contact",
+  "/s/kemi7Q2mX9?preview=link",
 ];
 
 /** Records every policy violation the page reports, from before it loads. */
