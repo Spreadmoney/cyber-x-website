@@ -7,7 +7,7 @@ import { useState } from "react";
 import { signOut } from "@/lib/auth/actions";
 import { NAV, href } from "@/lib/site/routes";
 
-import { ButtonLink } from "./Button";
+import { ButtonLink, buttonClass } from "./Button";
 import { LogoLink } from "./Logo";
 
 /**
@@ -56,16 +56,17 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-2 lg:gap-5">
+          <div className="flex items-center gap-2 lg:gap-2.5">
             {me ? (
-              <div className="hidden items-center gap-3 text-[15px] leading-[1.2] lg:flex">
+              <div className="hidden items-center gap-2 text-[15px] leading-[1.2] lg:flex">
+                {/* Sign in and Sign out are buttons, not links (Ayora, 17 Nov 2026). */}
                 <Link
                   href="/account"
-                  className="text-fg focus-visible:outline-accent flex items-center gap-2.5 rounded-full hover:underline focus-visible:outline-2 focus-visible:outline-offset-4"
+                  className="text-fg hover:bg-paper focus-visible:outline-accent flex h-10 items-center gap-2.5 rounded-full pr-4 pl-1 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   <span
                     aria-hidden="true"
-                    className="bg-avatar text-deep flex size-9 items-center justify-center rounded-full text-[13px] font-medium"
+                    className="bg-avatar text-deep flex size-8 items-center justify-center rounded-full text-[13px] font-medium"
                   >
                     {me.initials}
                   </span>
@@ -74,23 +75,20 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
                     {me.firstName}
                   </span>
                 </Link>
-                <span aria-hidden="true" className="bg-line h-5 w-px" />
                 <form action={signOut}>
-                  <button
-                    type="submit"
-                    className="text-accent focus-visible:outline-accent rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-offset-4"
-                  >
+                  <button type="submit" className={`${buttonClass("quiet", "S")} h-9 px-4`}>
                     Sign out
                   </button>
                 </form>
               </div>
             ) : (
-              <Link
-                href={href("signIn")}
-                className="text-fg focus-visible:outline-accent hidden rounded-sm text-[15px] leading-[1.2] underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 lg:inline"
-              >
-                Sign in
-              </Link>
+              // On phones, Sign in is in the menu (the button's own inline-flex
+              // would override "hidden", so a wrapper hides it).
+              <span className="hidden lg:contents">
+                <ButtonLink href={href("signIn")} variant="soft" size="S" className="h-9 px-4">
+                  Sign in
+                </ButtonLink>
+              </span>
             )}
             <button
               type="button"
@@ -116,7 +114,7 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
                 <span className="sr-only">Your account</span>
               </Link>
             ) : (
-              <ButtonLink href={href("getTheApp")} size="S">
+              <ButtonLink href={href("getTheApp")} size="S" className="h-9 px-4">
                 Get the app
               </ButtonLink>
             )}
@@ -131,9 +129,7 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
           <ul className="flex flex-col">
             {[
               ...NAV.map((link) => ({ label: link.label, to: href(link.page) })),
-              me
-                ? { label: "Your account", to: "/account" }
-                : { label: "Sign in", to: href("signIn") },
+              ...(me ? [{ label: "Your account", to: "/account" }] : []),
             ].map((link) => (
               <li key={link.to}>
                 <Link
@@ -145,18 +141,19 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
                 </Link>
               </li>
             ))}
-            {me ? (
-              <li>
+            <li className="border-line mt-1 border-t px-2 pt-3 pb-1">
+              {me ? (
                 <form action={signOut}>
-                  <button
-                    type="submit"
-                    className="text-accent hover:bg-paper focus-visible:outline-accent flex min-h-12 w-full items-center rounded-2xl px-4 text-[17px] leading-[1.2] focus-visible:outline-2"
-                  >
+                  <button type="submit" className={`${buttonClass("quiet")} w-full`}>
                     Sign out
                   </button>
                 </form>
-              </li>
-            ) : null}
+              ) : (
+                <ButtonLink href={href("signIn")} variant="soft" className="w-full" onClick={close}>
+                  Sign in
+                </ButtonLink>
+              )}
+            </li>
           </ul>
         </div>
       </div>
