@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 const pg = vi.hoisted(() => ({
   begin: vi.fn(),
+  end: vi.fn(async () => undefined),
   made: 0,
   queries: [] as string[],
   options: undefined as Record<string, unknown> | undefined,
@@ -10,7 +11,7 @@ vi.mock("postgres", () => ({
   default: (_url: string, options: Record<string, unknown>) => {
     pg.made += 1;
     pg.options = options;
-    return { begin: pg.begin };
+    return { begin: pg.begin, end: pg.end };
   },
 }));
 
@@ -18,6 +19,7 @@ afterEach(() => {
   vi.unstubAllEnvs();
   vi.resetModules();
   pg.begin.mockReset();
+  pg.end.mockClear();
   pg.made = 0;
   pg.queries = [];
   pg.options = undefined;
@@ -45,6 +47,25 @@ describe("the website's line to the database", () => {
     await expect(asWebsite(async () => 1)).rejects.toBeInstanceOf(CantReachError);
     pg.begin.mockRejectedValueOnce(Object.assign(new Error("no"), { code: "42501" }));
     await expect(asWebsite(async () => 1)).rejects.toThrow("no");
+  });
+
+  it("gives up on a database that goes quiet, and starts the next visit on a fresh line", async () => {
+    vi.stubEnv("DATABASE_URL", "postgres://u:pw@pooler.example:6543/postgres");
+    const { asWebsite, CantReachError, DB_TIME_LIMIT_MS } = await import("./db");
+    expect(DB_TIME_LIMIT_MS).toBe(8000);
+    pg.begin.mockImplementationOnce(() => new Promise(() => undefined));
+    const quiet = asWebsite(async () => 1, 20);
+    await expect(quiet).rejects.toBeInstanceOf(CantReachError);
+    await expect(quiet).rejects.toHaveProperty(
+      "cause.message",
+      "No answer from the database in 20 ms.",
+    );
+    expect(pg.end).toHaveBeenCalledWith({ timeout: 0 });
+    pg.begin.mockImplementationOnce(async (work: (sql: unknown) => unknown) =>
+      work(() => Promise.resolve([])),
+    );
+    expect(await asWebsite(async () => "back")).toBe("back");
+    expect(pg.made).toBe(2);
   });
 
   it("encrypts the line to Supabase, which its addresses don't ask for", async () => {

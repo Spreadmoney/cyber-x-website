@@ -17,7 +17,8 @@ const VARIANTS: Record<ButtonVariant, string> = {
   secondary: "border border-fg text-fg hover:bg-fg/5 focus-visible:outline-fg",
   // The second choice on newer pages: a blue tint instead of a black outline,
   // which Ayora found low fidelity (17 Nov 2026).
-  soft: "bg-accent/10 text-accent hover:bg-accent/15 focus-visible:outline-accent",
+  // On hover the words turn deep blue, so they stay readable on the stronger fill.
+  soft: "bg-accent/10 text-accent hover:bg-accent/15 hover:text-deep focus-visible:outline-accent",
   // A grey tint, for actions that matter less than the page's (Sign out).
   quiet: "bg-fg/6 text-fg hover:bg-fg/10 focus-visible:outline-accent",
   white: "bg-white text-fg hover:bg-white/90 focus-visible:outline-white",

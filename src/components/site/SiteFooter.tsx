@@ -4,8 +4,9 @@ import { FOOTER, href } from "@/lib/site/routes";
 
 import { WRAP } from "./Panel";
 
-const LINK =
-  "rounded-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+/** Footer links: grey words turn Cyber X blue on hover, no underline (Ayora, 19 Nov 2026). */
+export const FOOTER_LINK =
+  "rounded-sm transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 function LegalRow() {
   return (
@@ -39,7 +40,7 @@ export function SiteFooter() {
             <ul className="text-muted-fg flex flex-col gap-3 pb-4 text-[15px] leading-[1.4]">
               {column.links.map((link) => (
                 <li key={link.label}>
-                  <Link href={href(link.page)} className={LINK}>
+                  <Link href={href(link.page)} className={FOOTER_LINK}>
                     {link.label}
                   </Link>
                 </li>
@@ -57,7 +58,7 @@ export function SiteFooter() {
             <ul className="text-muted-fg flex flex-col gap-2.5 leading-[1.4]">
               {column.links.map((link) => (
                 <li key={link.label}>
-                  <Link href={href(link.page)} className={LINK}>
+                  <Link href={href(link.page)} className={FOOTER_LINK}>
                     {link.label}
                   </Link>
                 </li>
@@ -81,15 +82,15 @@ export function SlimFooter() {
     >
       <p>© 2026 Cyber X Technologies.</p>
       <p>
-        <Link href={href("privacy")} className={LINK}>
+        <Link href={href("privacy")} className={FOOTER_LINK}>
           Privacy
         </Link>
         {" · "}
-        <Link href={href("terms")} className={LINK}>
+        <Link href={href("terms")} className={FOOTER_LINK}>
           Terms
         </Link>
         {" · "}
-        <Link href={href("help")} className={LINK}>
+        <Link href={href("help")} className={FOOTER_LINK}>
           Help
         </Link>
       </p>

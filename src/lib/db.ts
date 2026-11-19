@@ -96,21 +96,50 @@ export function isConnectionError(error: unknown): boolean {
 }
 
 /**
+ * The longest a page waits for the database. Past it the page carries on as
+ * if signed out ("We can't reach Cyber X" on sign-in) instead of hanging.
+ */
+export const DB_TIME_LIMIT_MS = 8000;
+
+function forgetConnections(): void {
+  const stuck = client;
+  client = undefined;
+  stuck?.end({ timeout: 0 }).catch(() => undefined);
+}
+
+/**
  * Runs work in one transaction as the website's login. On Vercel the
  * connection already is that login; on a test machine it may be the owner,
  * and taking on the role proves the website's grants are enough.
  */
-export async function asWebsite<T>(work: (sql: postgres.Sql) => Promise<T>): Promise<T> {
+export async function asWebsite<T>(
+  work: (sql: postgres.Sql) => Promise<T>,
+  limitMs = DB_TIME_LIMIT_MS,
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const tooSlow = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      // A line that went quiet (often one left open while Vercel paused the
+      // server) is dropped, so the next visit starts on a fresh one. The
+      // database rolls back anything it hadn't finished.
+      forgetConnections();
+      reject(new CantReachError(new Error(`No answer from the database in ${limitMs} ms.`)));
+    }, limitMs);
+  });
   try {
-    return (await db().begin(async (transaction) => {
+    const run = db().begin(async (transaction) => {
       // The library's type for a transaction drops its call signature; it is
       // the same tagged-template function, bound to this transaction.
       const sql = transaction as unknown as postgres.Sql;
       await sql`set local role cyberx_website`;
       return work(sql);
-    })) as T;
+    });
+    return (await Promise.race([run, tooSlow])) as T;
   } catch (error) {
-    if (isConnectionError(error)) throw new CantReachError(error);
+    if (isConnectionError(error))
+      throw error instanceof CantReachError ? error : new CantReachError(error);
     throw error;
+  } finally {
+    clearTimeout(timer);
   }
 }

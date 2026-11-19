@@ -22,6 +22,15 @@ export interface HeaderMe {
   firstName: string;
 }
 
+/**
+ * A menu link's colours. Hover: blue words on a light-blue pill (4.6:1).
+ * The page you're on: deep-blue words on a stronger pill (7.2:1), so it
+ * stays marked without an underline.
+ */
+export function navPill(current: boolean): string {
+  return current ? "bg-accent/15 text-deep" : "text-fg hover:bg-accent/10 hover:text-accent";
+}
+
 export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
   const pathname = usePathname();
   const [openOn, setOpenOn] = useState<string | null>(null);
@@ -43,18 +52,23 @@ export function SiteHeader({ me = null }: { me?: HeaderMe | null }) {
           className="shadow-pill mx-auto flex max-w-[1136px] items-center justify-between rounded-full bg-white py-2 pr-2 pl-[18px] lg:pl-6"
         >
           <LogoLink />
-          <ul className="hidden items-center gap-7 text-[15px] leading-[1.2] lg:flex">
-            {NAV.map((link) => (
-              <li key={link.page}>
-                <Link
-                  href={href(link.page)}
-                  aria-current={pathname === href(link.page) ? "page" : undefined}
-                  className="text-fg focus-visible:outline-accent rounded-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 aria-[current=page]:underline"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+          {/* Menu links: a light-blue pill on hover, a stronger one on the
+              page you're on. No underline (Ayora, 19 Nov 2026). */}
+          <ul className="hidden items-center gap-1 text-[15px] leading-[1.2] lg:flex">
+            {NAV.map((link) => {
+              const current = pathname === href(link.page);
+              return (
+                <li key={link.page}>
+                  <Link
+                    href={href(link.page)}
+                    aria-current={current ? "page" : undefined}
+                    className={`${navPill(current)} focus-visible:outline-accent flex h-9 items-center rounded-full px-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
           <div className="flex items-center gap-2 lg:gap-2.5">
             {me ? (

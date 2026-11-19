@@ -8,8 +8,8 @@ import { GlassX } from "./GlassX";
 import { Icon, Seal } from "./Icon";
 import { LogoLink } from "./Logo";
 import { Panel, Tag } from "./Panel";
-import { SiteFooter, SlimFooter } from "./SiteFooter";
-import { SiteHeader } from "./SiteHeader";
+import { FOOTER_LINK, SiteFooter, SlimFooter } from "./SiteFooter";
+import { SiteHeader, navPill } from "./SiteHeader";
 import { SiteLink } from "./SiteLink";
 import { StoreButton, StoreLink } from "./StoreButton";
 import { CardItem, SystemPage } from "./SystemPage";
@@ -169,6 +169,19 @@ describe("menu bar", () => {
       "/get-the-app",
     );
   });
+
+  it("marks menu links with a light-blue pill, never an underline", () => {
+    expect(navPill(false)).toContain("hover:bg-accent/10");
+    expect(navPill(true)).toContain("bg-accent/15");
+    expect(navPill(true)).toContain("text-deep");
+    render(<SiteHeader />);
+    const features = within(screen.getByRole("navigation", { name: "Main" })).getByRole("link", {
+      name: "Features",
+    });
+    expect(features).not.toHaveAttribute("aria-current");
+    expect(features.className).toContain("rounded-full");
+    expect(features.className).not.toContain("underline");
+  });
 });
 
 describe("footers", () => {
@@ -178,6 +191,14 @@ describe("footers", () => {
     expect(
       screen.getByText("Cyber X will never ask for your PIN, password or codes."),
     ).toBeInTheDocument();
+  });
+
+  it("turns footer links blue on hover, never underlined", () => {
+    render(<SlimFooter />);
+    const privacy = screen.getByRole("link", { name: "Privacy" });
+    expect(FOOTER_LINK).toContain("hover:text-accent");
+    expect(privacy.className).toContain("hover:text-accent");
+    expect(privacy.className).not.toContain("underline");
   });
 
   it("keeps the slim footer to the essentials", () => {
